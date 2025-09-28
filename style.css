@@ -11,3 +11,22 @@ body {
     margin: 0; 
     padding: 0; 
 }
+
+header {
+    background-color: #2a2a3d;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    color: #4da6ff;
+    font-family: 'Oswald', sans-serif;
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+header p {
+    font-size: 1.2rem;
+    color: #cccccc;
+}
