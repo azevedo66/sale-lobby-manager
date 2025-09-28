@@ -8,15 +8,20 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
     <header>
         <h1>GTA Sale Rotation Manager</h1>
         <p>Organize your sale rotations efficiently</p>
     </header>
 
     <main>
+
         <section id="rotation-manager-section">
+
             <h2>Rotation Manager</h2>
+
             <form id="player-input-form">
+
                 <label for="player-name-input">Player Name</label>
                 <input type="text" id="player-name-input" name="player-name-input" placeholder="Enter player name" required>
 
@@ -29,8 +34,30 @@
                 </label>
                 
                 <button type="submit">Add Player</button>
+
             </form>
+
         </section>
+
+        <section id="player-lists-section">
+
+            <div class="player-list">
+                <h3>Rotations</h3>
+                <ul id="rotation-list"></ul>
+            </div>
+
+            <div class="player-list">
+                <h3>Waiting List</h3>
+                <ul id="waiting-list"></ul>
+            </div>
+
+            <div class="player-list">
+                <h3>Non-Helpers</h3>
+                <ul id="non-helpers-list"></ul>
+            </div>
+
+        </section>
+
     </main>
 
     <footer>
@@ -38,5 +65,6 @@
     </footer>
 
     <script src="script.js"></script>
+    
 </body>
 </html>
