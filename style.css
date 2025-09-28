@@ -27,6 +27,12 @@ header h1 {
 }
 
 header p {
-    font-size: 1.2rem;
     color: #cccccc;
+    font-size: 1.2rem;
+}
+
+main {
+    margin: 20px auto;
+    max-width: 90%;
+    padding: 20px;
 }
