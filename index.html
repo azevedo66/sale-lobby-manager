@@ -13,12 +13,30 @@
         <p>Organize your sale rotations efficiently</p>
     </header>
 
-    <main></main>
+    <main>
+        <section id="rotation-manager-section">
+            <h2>Rotation Manager</h2>
+            <form id="player-input-form">
+                <label for="player-name-input">Player Name</label>
+                <input type="text" id="player-name-input" name="player-name-input" placeholder="Enter player name" required>
+
+                <label for="businesses-input">Businesses</label>
+                <input type="number" id="businesses-input" name="businesses-input" min="0" max="6" placeholder="0-6" required>
+
+                <label for="non-helper-input">
+                    <input type="checkbox" id="non-helper-input">
+                    <span>Mark as Non-Helper</span>
+                </label>
+                
+                <button type="submit">Add Player</button>
+            </form>
+        </section>
+    </main>
 
     <footer>
         <p>2025 Sale Rotations Manager</p>
     </footer>
-    
+
     <script src="script.js"></script>
 </body>
 </html>
