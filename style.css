@@ -54,7 +54,7 @@ header p {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    background: #2a2a3b;
+    background-color: #2a2a3b;
     padding: 20px;
     border-radius: 8px;
 }
@@ -68,7 +68,7 @@ header p {
     padding: 8px;
     border: none;
     border-radius: 4px;
-    background: #1b1b29;
+    background-color: #1b1b29;
     color: #f5f5f5
 }
 
@@ -76,15 +76,15 @@ header p {
     padding: 10px 15px;
     border: none;
     border-radius: 4px;
-    background: #4a4aff;
+    background-color: #4a4aff;
     color: white;
     font-weight: 600;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: background-color 0.3s;
 }
 
 #player-input-form button:hover {
-    background: #3737d6;
+    background-color: #3737d6;
 }
 
 /* Switch Styles */
@@ -122,7 +122,7 @@ header p {
 }
 
 .switch input:checked + .slider {
-    background: #4da6ff;
+    background-color: #4da6ff;
 }
 
 .switch input:checked + .slider::before {
@@ -142,7 +142,7 @@ header p {
 
 /* Player Sections */
 .player-section {
-    background: #2a2a3b;
+    background-color: #2a2a3b;
     padding: 15px;
     border-radius: 8px;
     text-align: center;
@@ -189,14 +189,29 @@ header p {
 }
 
 #info-section {
+    background-color: #2a2a3b;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    color: #fff;
+    line-height: 1.6;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+#info-section h2 {
     text-align: center;
+    margin-bottom: 15px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.5rem;
 }
 
 #info-section ul {
-    margin: 15px 0;
-    padding-left: 20px;
-    text-align: left;
-    display: inline-block;
+    margin: 10px 0 15px 20px;
+    padding: 0;
+}
+
+#info-section li {
+    margin-bottom: 8px;
 }
 
 #toggle-info-btn {
@@ -205,15 +220,15 @@ header p {
     padding: 8px 12px;
     border: none;
     border-radius: 4px;
-    background: #4a4aff;
+    background-color: #4a4aff;
     color: white;
     font-weight: 600;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: background-color 0.3 ease-in-out;
 }
 
 #toggle-info-btn:hover {
-    background: #3737d6;
+    background-color: #357ab7;
 }
 
 /* Footer */
