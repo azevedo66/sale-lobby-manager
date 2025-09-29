@@ -219,3 +219,37 @@ input[type="number"]#businesses-input {
     margin: 5px 0;
     border-radius: 6px;
 }
+
+#info-section {
+    background: #2a2a3d;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 25px 0;
+    box-shadow: 0 2px 9px rgba(0,0,0,0.5);
+    text-align: left;
+}
+
+#toggle-info-btn {
+    margin-top: 10px;
+    padding: 10px 25px;
+    background: #4da6ff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#toggle-info-btn:hover {
+    background: #3abcd6;
+}
+
+#info-btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#info-section h2 {
+    text-align: center;
+}
