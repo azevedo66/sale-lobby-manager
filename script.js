@@ -39,6 +39,15 @@ playerForm.addEventListener('submit', (e) => {
         li.appendChild(badge);
     }
 
+    const removeBtn = document.createElement("button");
+    removeBtn.textContent = "Remove";
+    removeBtn.classList.add("remove-btn");
+    removeBtn.addEventListener("click", () => {
+        li.remove();
+    });
+
+    li.appendChild(removeBtn);
+
     enteredPlayersList.appendChild(li);
 
     playerForm.reset();
