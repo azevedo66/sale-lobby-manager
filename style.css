@@ -185,3 +185,37 @@ input[type="number"]#businesses-input {
     min-width: 220px;
     text-align: left;
 }
+
+#player-lists-section {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.player-list {
+    background: #2a2a3d;
+    border-radius: 12px;
+    padding: 20px;
+    flex: 1;
+    min-width: 250px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+
+.player-list h3 {
+    font-family: 'Oswald', sans-serif;
+    color: #4da6ff;
+    margin-top: 0;
+}
+
+.player-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.player-list li {
+    background: #3a3a50;
+    padding: 8px 12px;
+    margin: 5px 0;
+    border-radius: 6px;
+}
