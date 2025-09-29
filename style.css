@@ -253,3 +253,12 @@ input[type="number"]#businesses-input {
 #info-section h2 {
     text-align: center;
 }
+
+footer {
+    margin-top: 30px;
+    padding: 15px;
+    background-color: #2a2a3d;
+    color: #cccccc;
+    text-align: center;
+    border-top: 2px solid #3a3a50;
+}
