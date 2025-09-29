@@ -89,11 +89,11 @@ header p {
 
 /* Switch Styles */
 .switch {
-    position: relative;
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
     cursor: pointer;
+    margin-bottom: 10px;
 }
 
 .switch input {
@@ -106,7 +106,6 @@ header p {
     background-color: #555;
     border-radius: 25px;
     transition: background-color 0.3s;
-    flex-shrink: 0;
     position: relative;
 }
 
@@ -128,6 +127,17 @@ header p {
 
 .switch input:checked + .slider::before {
     transform: translateX(24px);
+}
+
+.player-tag {
+    display: inline-block;
+    background-color: #4da6ff;
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 8px;
 }
 
 /* Player Sections */
