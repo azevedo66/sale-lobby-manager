@@ -29,9 +29,10 @@
                     <input type="checkbox" id="non-helper-input">
                     <span class="slider"></span>
                     <span class="switch-label">Mark as Non-Helper</span>
+
                 </label>
 
-                <label class="switch" for="small-rotation-input">
+                <label class="switch">
                     <input type="checkbox" id="small-rotation-input">
                     <span class="slider"></span>
                     <span class="switch-label">Waiting for Small Rotation</span>
@@ -40,24 +41,24 @@
                 <button type="submit">Add Player</button>
             </form>
 
-            <div id="entered-players-container">
+            <div id="entered-players-container" class="player-section">
                 <h3>Players Entered</h3>
                 <ul id="entered-players-list"></ul>
             </div>
         </section>
 
         <section id="player-lists-section">
-            <div class="player-list">
+            <div class="player-section">
                 <h3>Rotations</h3>
                 <ul id="rotation-list"></ul>
             </div>
 
-            <div class="player-list">
+            <div class="player-section">
                 <h3>Waiting List</h3>
                 <ul id="waiting-list"></ul>
             </div>
 
-            <div class="player-list">
+            <div class="player-section">
                 <h3>Non-Helpers</h3>
                 <ul id="non-helpers-list"></ul>
             </div>
