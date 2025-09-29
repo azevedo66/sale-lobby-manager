@@ -183,6 +183,11 @@ header p {
 }
 
 /* Info Section */
+
+#info-content {
+    display: none;
+}
+
 #info-section {
     text-align: center;
 }

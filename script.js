@@ -43,3 +43,16 @@ playerForm.addEventListener('submit', (e) => {
 
     playerForm.reset();
 });
+
+const toggleInfoBtn = document.getElementById("toggle-info-btn");
+const infoContent = document.getElementById("info-content");
+
+toggleInfoBtn.addEventListener("click", () => {
+    if (infoContent.style.display === "none" || infoContent.style.display === "") {
+        infoContent.style.display = "block";
+        toggleInfoBtn.textContent = "Hide Info";
+    } else {
+        infoContent.style.display = "none";
+        toggleInfoBtn.textContent = "Show Info"
+    }
+});
