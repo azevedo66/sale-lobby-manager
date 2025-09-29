@@ -9,56 +9,44 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <header>
         <h1>GTA Sale Rotation Manager</h1>
         <p>Organize your sale rotations efficiently</p>
     </header>
 
     <main>
-
         <section id="rotation-manager-section">
-
             <h2>Rotation Manager</h2>
 
             <form id="player-input-form">
-                <div class="form-row">
-                    <label for="player-name-input">Player Name</label>
-                    <input type="text" id="player-name-input" name="player-name-input" placeholder="Enter player name" required>
-    
-                    <label for="businesses-input">Businesses</label>
-                    <input type="number" id="businesses-input" name="businesses-input" min="0" max="6" placeholder="0-6" required>
-                </div>
+                <label for="player-name-input">Player Name</label>
+                <input type="text" id="player-name-input" name="player-name-input" placeholder="Enter player name" required>
 
-                <div class="form-row">
-                    <label class="switch" for="non-helper-input">
-                        <input type="checkbox" id="non-helper-input">
-                        <span class="slider"></span>
-                        <span class="switch-label">Mark as Non-Helper</span>
-                    </label>
+                <label for="businesses-input">Businesses</label>
+                <input type="number" id="businesses-input" name="businesses-input" min="0" max="6" placeholder="0-6" required>
 
-                    <label class="switch" for="small-rotation-input">
-                        <input type="checkbox" id="small-rotation-input">
-                        <span class="slider"></span>
-                        <span class="switch-label">Waiting for Small Rotation</span>
-                    </label>
-                </div>
+                <label class="switch">
+                    <input type="checkbox" id="non-helper-input">
+                    <span class="slider"></span>
+                    <span class="switch-label">Mark as Non-Helper</span>
+                </label>
 
-                <div class="form-row">
-                    <button id="add-player-btn" type="submit">Add Player</button>
-                </div>
-
+                <label class="switch" for="small-rotation-input">
+                    <input type="checkbox" id="small-rotation-input">
+                    <span class="slider"></span>
+                    <span class="switch-label">Waiting for Small Rotation</span>
+                </label>
+                
+                <button type="submit">Add Player</button>
             </form>
 
             <div id="entered-players-container">
                 <h3>Players Entered</h3>
                 <ul id="entered-players-list"></ul>
             </div>
-
         </section>
 
         <section id="player-lists-section">
-
             <div class="player-list">
                 <h3>Rotations</h3>
                 <ul id="rotation-list"></ul>
@@ -73,25 +61,18 @@
                 <h3>Non-Helpers</h3>
                 <ul id="non-helpers-list"></ul>
             </div>
-
         </section>
 
         <section id="info-section">
-            <div id="info-btn-container">
-                <button id="toggle-info-btn">Show Info</button>
-            </div>
-
             <h2>Guidelines & How It Works</h2>
-        
             <p><strong>Sale Rotations:</strong> A sale rotation is a group of players who take turns selling their businesses with help from others.</p>
-
             <ul>
                 <li>Rotations are made up of 3 to 4 players.</li>
                 <li>Each rotation has at least 1 seller with 1 to 6 businesses to sell.</li>
                 <li>Helpers with no businesses assist sellers.</li>
                 <li>New players can be inserted into rotations as space allows.</li>
             </ul>
-        
+            <button id="toggle-info-btn">Show Info</button>
         </section>
 
     </main>
@@ -101,6 +82,5 @@
     </footer>
 
     <script src="script.js"></script>
-
 </body>
 </html>
