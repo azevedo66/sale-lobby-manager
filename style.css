@@ -160,3 +160,28 @@ input[type="number"]#businesses-input {
 #add-player-btn:hover {
     background-color: #3a8cd6;
 }
+
+#entered-players-container {
+    text-align: center;
+    margin-top: 15px;
+}
+
+#entered-players-container h3 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+#entered-players-list {
+    list-style: none;
+    padding: 0;
+}
+
+#entered-players li {
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    font-weight: 600;
+    display: block;
+    min-width: 220px;
+    text-align: left;
+}
