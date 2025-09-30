@@ -228,6 +228,26 @@ header p {
     background: #d63636;
 }
 
+#create-rotations-btn {
+    display: block;
+    margin: 20px auto;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    background-color: #4a4aff;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+}
+
+#create-rotations-btn:hover {
+    background-color: #3737d6;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(74, 74, 255, 0.4);
+}
+
 footer {
     text-align: center;
     margin-top: 40px;
