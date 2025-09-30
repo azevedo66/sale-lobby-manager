@@ -17,21 +17,21 @@
     <main>
         <section id="rotation-manager-section">
             <h2>Rotation Manager</h2>
-
             <form id="player-input-form">
                 <label for="player-name-input">Player Name</label>
-                <input type="text" id="player-name-input" name="player-name-input" placeholder="Enter player name" required>
+                <input type="text" id="player-name-input" placeholder="Enter player name" required>
 
                 <label for="businesses-input">Businesses</label>
-                <input type="number" id="businesses-input" name="businesses-input" min="0" max="6" placeholder="0-6" required>
+                <input type="number" id="businesses-input" min="0" max="6" placeholder="0-6" required>
 
                 <label class="switch">
                     <input type="checkbox" id="non-helper-input">
                     <span class="slider"></span>
                     <span class="switch-label">Mark as Non-Helper</span>
+
                 </label>
 
-                <label class="switch" for="small-rotation-input">
+                <label class="switch">
                     <input type="checkbox" id="small-rotation-input">
                     <span class="slider"></span>
                     <span class="switch-label">Waiting for Small Rotation</span>
@@ -40,41 +40,52 @@
                 <button type="submit">Add Player</button>
             </form>
 
-            <div id="entered-players-container">
+            <div id="entered-players-container" class="player-section">
                 <h3>Players Entered</h3>
                 <ul id="entered-players-list"></ul>
             </div>
+
+            <button id="create-rotations-btn">Create Rotations</button>
         </section>
 
         <section id="player-lists-section">
-            <div class="player-list">
+            <div class="player-section">
                 <h3>Rotations</h3>
                 <ul id="rotation-list"></ul>
             </div>
 
-            <div class="player-list">
+            <div class="player-section">
                 <h3>Waiting List</h3>
                 <ul id="waiting-list"></ul>
             </div>
 
-            <div class="player-list">
+            <div class="player-section">
                 <h3>Non-Helpers</h3>
                 <ul id="non-helpers-list"></ul>
             </div>
         </section>
 
         <section id="info-section">
-            <h2>Guidelines & How It Works</h2>
-            <p><strong>Sale Rotations:</strong> A sale rotation is a group of players who take turns selling their businesses with help from others.</p>
-            <ul>
-                <li>Rotations are made up of 3 to 4 players.</li>
-                <li>Each rotation has at least 1 seller with 1 to 6 businesses to sell.</li>
-                <li>Helpers with no businesses assist sellers.</li>
-                <li>New players can be inserted into rotations as space allows.</li>
-            </ul>
+            <div id="info-content">
+                <h2>Guidelines & How It Works</h2>
+                <p><strong>Sale Rotations:</strong> A sale rotation is a group of players who take turns selling their businesses with help from others.</p>
+                <ul>
+                    <li>Rotations are made up of 3 to 4 players.</li>
+                    <li>Each rotation has at least 1 seller with 1 to 6 businesses to sell.</li>
+                    <li>Helpers with no businesses assist sellers.</li>
+                    <li>New players can be inserted into rotations as space allows.</li>
+                </ul>
+                <p><strong>Player Input Form:</strong></p>
+                <ul>
+                    <li><strong>Player Name:</strong> Enter the player's in game name.</li>
+                    <li><strong>Businesses:</strong> Enter the number of businesses the player wants to sell (0-6).</li>
+                    <li><strong>Mark as Non-Helper:</strong> Select this if the player is not ready to sell or doesn't want to be in a sale rotation yet.
+                        They can be entered into a rotation later when they're ready.</li>
+                    <li><strong>Waiting for Small Rotation:</strong> Select this if the player only wants to join smaller rotations, ensuring they're grouped more fairly.</li>
+                </ul>
+            </div>
             <button id="toggle-info-btn">Show Info</button>
         </section>
-
     </main>
 
     <footer>
