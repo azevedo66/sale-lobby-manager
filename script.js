@@ -55,8 +55,10 @@ function renderRotations(rotations, waitingList, nonHelpers) {
             const li = document.createElement("li");
             li.className = "rotation-item";
 
+            const totalBusinesses = rotationObj.players.reduce((sum, p) => sum + p.businesses, 0);
+
             const title = document.createElement("strong");
-            title.textContent = `Rotation ${i + 1}:`;
+            title.textContent = `Rotation ${i + 1} (${totalBusinesses} businesses):`;
             li.appendChild(title);
     
             rotationObj.players.forEach((player, idx) => {
