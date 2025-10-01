@@ -107,7 +107,12 @@ function renderRotations(rotations, waitingList, nonHelpers) {
     } else {
         waitingList.forEach((player, i) => {
             const li = document.createElement("li");
-            li.textContent = `${player.name} (${player.businesses} businesses)`;
+
+            const container = document.createElement("div");
+            container.className = "player-item-container";
+
+            const playerText = document.createElement("span");
+            playerText.textContent = `${player.name} (${player.businesses} businesses)`;
     
             const moveBtn = document.createElement("button");
             moveBtn.textContent = "Move to Rotation";
@@ -122,8 +127,10 @@ function renderRotations(rotations, waitingList, nonHelpers) {
                 waitingList.splice(i, 1);
                 renderRotations(rotations, waitingList, nonHelpers);
             });
-    
-            li.appendChild(moveBtn);
+            
+            container.appendChild(playerText);
+            container.appendChild(moveBtn);
+            li.appendChild(container);
             waitingUl.appendChild(li);
         });
     }
