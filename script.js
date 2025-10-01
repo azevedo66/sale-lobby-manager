@@ -18,8 +18,15 @@ const endAllBtn = document.getElementById("end-all-btn");
 const toggleInfoBtn = document.getElementById("toggle-info-btn");
 const infoContent = document.getElementById("info-content");
 
+let hideEnteredPlayers = false;
+
 function renderPlayers() {
     enteredPlayersList.innerHTML = "";
+
+    if (hideEnteredPlayers || players.length === 0) {
+        enteredPlayersList.innerHTML = `<li class="empty-message">No players yet</li>`;
+        return;
+    }
 
     players.forEach((player, index) => {
         const li = document.createElement("li");
@@ -208,6 +215,9 @@ function createRotations() {
     waitingList = [...waitingSmall, ...waitingList];
 
     renderRotations(rotations, waitingList, nonHelpers);
+
+    hideEnteredPlayers = true;
+    renderPlayers();
 }
 
 function endRotation(index) {
