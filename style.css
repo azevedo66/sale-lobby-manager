@@ -105,6 +105,11 @@ button + button {
     font-weight: 600;
 }
 
+#player-input-form .btn-primary {
+    width: 80%;
+    max-width: 500px;
+}
+
 #player-input-form input[type="text"],
 #player-input-form input[type="number"] {
     padding: 8px;
@@ -263,4 +268,16 @@ footer {
 .end-rotation-btn {
     align-self: flex-start;
     margin-top: 8px;
+}
+
+.rotation-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.rotation-actions button {
+    flex: 1;
+    max-width: 200px;
 }
