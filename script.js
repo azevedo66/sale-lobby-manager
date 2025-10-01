@@ -55,24 +55,23 @@ function renderPlayers() {
     }
 
     players.forEach((player, index) => {
+        const playerEl = createPlayerElement(
+            player,
+            "Remove",
+            "btn-danger",
+            () => {
+                players.splice(index, 1);
+                renderPlayers();
+            }
+        );
+
         const li = document.createElement("li");
-        li.textContent = `${player.name} (${player.businesses} businesses)`;
-
-        if (player.isNonHelper) addTag(li, "Non-Helper");
-        if (player.waitingSmallRotation) addTag(li, "Waiting for Small Rotation");
-
-        const removeBtn = document.createElement("button");
-        removeBtn.textContent = "Remove";
-        removeBtn.className = "btn-danger";
-        removeBtn.addEventListener("click", () => removePlayer(index));
-        li.appendChild(removeBtn);
-
+        li.appendChild(playerEl);
         enteredPlayersList.appendChild(li);
-
     });
 }
 
-function renderRotations(rotations, waitingList, nonHelpers) {
+function renderRotations(rotationsArr, waitingArr, nonHelpersArr) {
     const rotationList = document.getElementById("rotation-list");
     const waitingUl = document.getElementById("waiting-list");
     const nonHelpersUl = document.getElementById("non-helpers-list");
@@ -81,10 +80,10 @@ function renderRotations(rotations, waitingList, nonHelpers) {
     waitingUl.innerHTML = "";
     nonHelpersUl.innerHTML = "";
 
-    if (rotations.length === 0) {
+    if (rotationsArr.length === 0) {
         rotationList.innerHTML = `<li class="empty-message">No players yet</li>`
     } else {
-        rotations.forEach((rotationObj, i) => {
+        rotationsArr.forEach((rotationObj, i) => {
             const li = document.createElement("li");
             li.className = "rotation-item";
 
@@ -96,17 +95,12 @@ function renderRotations(rotations, waitingList, nonHelpers) {
             rotationObj.players.forEach((player, idx) => {
                 const playerEl = createPlayerElement(
                     player,
-                    "Move to Rotation",
+                    "Move to Waiting List",
                     "btn-primary",
                     () => {
-                        let target = rotations.find(r => r.players.length < 4);
-                        if (!target) {
-                            target = { players: [], total: 0 };
-                            rotations.push(target);
-                        }
-                        target.players.push(player);
-                        waitingList.splice(i, 1);
-                        renderRotations(rotations, waitingList, nonHelpers);
+                        waitingArr.push(player);
+                        rotationObj.players.splice(idx, 1);
+                        renderRotations(rotationsArr, waitingArr, nonHelpersArr);
                     }
                 );
                 li.appendChild(playerEl);
@@ -122,25 +116,24 @@ function renderRotations(rotations, waitingList, nonHelpers) {
         });
     }
 
-    if (waitingList.length === 0) {
+    if (waitingArr.length === 0) {
         waitingUl.innerHTML = `<li class="empty-message">No players yet</li>`;
     } else {
-        waitingList.forEach((player, i) => {
+        waitingArr.forEach((player, i) => {
             const li = document.createElement("li");
-
             const playerEl = createPlayerElement(
                 player, 
                 "Move to Rotation",
                 "btn-primary",
                 () => {
-                    let target = rotations.find(r => r.players.lengnth < 4);
+                    let target = rotationsArr.find(r => r.players.length < 4);
                     if (!target) {
                         target = { players: [], total: 0 };
-                        rotations.push(target);
+                        rotationsArr.push(target);
                     }
                     target.players.push(player);
-                    waitingList.splice(i, 1);
-                    renderRotations(rotations, waitingList, nonHelpers);
+                    waitingArr.splice(i, 1);
+                    renderRotations(rotationsArr, waitingArr, nonHelpersArr);
                 }
             );
             
@@ -149,10 +142,10 @@ function renderRotations(rotations, waitingList, nonHelpers) {
         });
     }
     
-    if (nonHelpers.length === 0) {
+    if (nonHelpersArr.length === 0) {
         nonHelpersUl.innerHTML = `<li class="empty-message">No players yet</li>`;
     } else {
-        nonHelpers.forEach(p => {
+        nonHelpersArr.forEach(p => {
             const li = document.createElement("li");
             li.textContent = `${p.name} (${p.businesses} businesses)`;
             nonHelpersUl.appendChild(li);
@@ -189,45 +182,31 @@ function createRotations() {
     const nonHelpers = players.filter(p => p.isNonHelper);
     const waitingSmall = players.filter(p => p.waitingSmallRotation);
 
+    rotations = [];
     waitingList = [];
 
-    const maxRotationCount = Math.ceil((sellers.length + helpers.length) / 4) || 1;
-    rotations = Array.from({ length: maxRotationCount }, () => ({ players: [], total: 0 }));
-
-    sellers.forEach(seller => {
-        const target = rotations.reduce((min, r) => 
-            r.players.length < 4 && r.total < min.total ? r : min, 
-            rotations[0]
-        );
-        if (target.players.length < 4) {
-            target.players.push(seller);
-            target.total += seller.businesses;
+    for (let i = 0; i < sellers.length; i += 4) {
+        const chunk = sellers.slice(i, i + 4);
+        if (chunk.length === 4) {
+            rotations.push({ players: chunk, total: chunk.reduce((sum, p) => sum + p.businesses, 0) });
         } else {
-            waitingList.push(seller);
+            waitingList.push(...chunk); 
         }
-    });
-
-    helpers.forEach(helper => {
-        const candidates = rotations.filter(r => r.players.length < 4 && r.players.some(p => p.businesses > 0));
-        if (candidates.length === 0) waitingList.push(helper);
-        else {
-            const target = candidates.reduce((min, r) => r.total < min.total ? r : min, candidates[0]);
-            target.players.push(helper);
-        }
-    });
-
-    balanceRotations(rotations);
-
-    const validRotations = rotations.filter(r => r.players.length >= 3 && r.players.some(p => p.businesses > 0));
-    validRotations.forEach(r => r.players.length < 4 && waitingList.push(...r.players.splice(r.players.length)));
-
-    while (waitingSmall.length >= 3) {
-        validRotations.push({ players: waitingSmall.splice(0, 3), total: 0 });
     }
 
-    rotations = validRotations;
-    waitingList = [...waitingSmall, ...waitingList];
+    helpers.forEach(helper => {
+        const target = rotations.find(r => r.players.length < 4);
+        if (target) target.players.push(helper);
+        else waitingList.push(helper); 
+    });
+    
+    balanceRotations(rotations);
 
+    while (waitingSmall.length >= 3) {
+        rotations.push({ players: waitingSmall.splice(0, 3), total: 0 });
+    }
+
+    waitingList.push(...waitingSmall); 
     renderRotations(rotations, waitingList, nonHelpers);
 
     hideEnteredPlayers = true;
