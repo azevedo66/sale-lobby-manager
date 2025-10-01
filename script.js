@@ -20,6 +20,32 @@ const infoContent = document.getElementById("info-content");
 
 let hideEnteredPlayers = false;
 
+function addTag(li, text) {
+    const badge = document.createElement("span");
+    badge.className = "player-tag";
+    badge.textContent = text;
+    li.appendChild(badge);
+}
+
+function createPlayerElement(player, buttonText, buttonClass, buttonAction) {
+    const container = document.createElement("div");
+    container.className = "player-item-container";
+    
+    const nameSpan = document.createElement("span");
+    nameSpan.textContent = `${player.name} (${player.businesses} businesses)`;
+    if (player.isNonHelper) addTag(nameSpan, "Non-Helper");
+    if (player.waitingSmallRotation) addTag(nameSpan, "Waiting for Small Rotation");
+    container.appendChild(nameSpan);
+
+    const btn = document.createElement("button");
+    btn.textContent = buttonText;
+    btn.className = buttonClass;
+    btn.addEventListener("click", buttonAction);
+    container.appendChild(btn);
+
+    return container;
+}
+
 function renderPlayers() {
     enteredPlayersList.innerHTML = "";
 
@@ -63,33 +89,27 @@ function renderRotations(rotations, waitingList, nonHelpers) {
             li.className = "rotation-item";
 
             const totalBusinesses = rotationObj.players.reduce((sum, p) => sum + p.businesses, 0);
-
             const title = document.createElement("strong");
             title.textContent = `Rotation ${i + 1} (${totalBusinesses} businesses):`;
             li.appendChild(title);
     
             rotationObj.players.forEach((player, idx) => {
-                const playerDiv = document.createElement("div");
-                playerDiv.className = "rotation-player";
-
-                const nameSpan = document.createElement("span");
-                nameSpan.textContent = `${player.name} (${player.businesses} businesses)`;
-                playerDiv.appendChild(nameSpan);
-
-                if (player.isNonHelper) addTag(nameSpan, "Non-Helper");
-                if (player.waitingSmallRotation) addTag(nameSpan, "Waiting for Small Rotation");
-
-                const moveBtn = document.createElement("button");
-                moveBtn.textContent = "Move to Waiting";
-                moveBtn.className = "btn-secondary";
-                moveBtn.addEventListener("click", () => {
-                    waitingList.push(player);
-                    rotationObj.players.splice(idx, 1);
-                    renderRotations(rotations, waitingList, nonHelpers);
-                });
-
-                playerDiv.appendChild(moveBtn);
-                li.appendChild(playerDiv);
+                const playerEl = createPlayerElement(
+                    player,
+                    "Move to Rotation",
+                    "btn-primary",
+                    () => {
+                        let target = rotations.find(r => r.players.length < 4);
+                        if (!target) {
+                            target = { players: [], total: 0 };
+                            rotations.push(target);
+                        }
+                        target.players.push(player);
+                        waitingList.splice(i, 1);
+                        renderRotations(rotations, waitingList, nonHelpers);
+                    }
+                );
+                li.appendChild(playerEl);
             });
 
             const endBtn = document.createElement("button");
@@ -108,29 +128,23 @@ function renderRotations(rotations, waitingList, nonHelpers) {
         waitingList.forEach((player, i) => {
             const li = document.createElement("li");
 
-            const container = document.createElement("div");
-            container.className = "player-item-container";
-
-            const playerText = document.createElement("span");
-            playerText.textContent = `${player.name} (${player.businesses} businesses)`;
-    
-            const moveBtn = document.createElement("button");
-            moveBtn.textContent = "Move to Rotation";
-            moveBtn.className = "btn-primary";
-            moveBtn.addEventListener("click", () => {
-                let target = rotations.find(r => r.players.length < 4);
-                if(!target) {
-                    target = { players: [], total: 0 };
-                    rotations.push(target);
+            const playerEl = createPlayerElement(
+                player, 
+                "Move to Rotation",
+                "btn-primary",
+                () => {
+                    let target = rotations.find(r => r.players.lengnth < 4);
+                    if (!target) {
+                        target = { players: [], total: 0 };
+                        rotations.push(target);
+                    }
+                    target.players.push(player);
+                    waitingList.splice(i, 1);
+                    renderRotations(rotations, waitingList, nonHelpers);
                 }
-                target.players.push(player);
-                waitingList.splice(i, 1);
-                renderRotations(rotations, waitingList, nonHelpers);
-            });
+            );
             
-            container.appendChild(playerText);
-            container.appendChild(moveBtn);
-            li.appendChild(container);
+            li.appendChild(playerEl);
             waitingUl.appendChild(li);
         });
     }
@@ -144,13 +158,6 @@ function renderRotations(rotations, waitingList, nonHelpers) {
             nonHelpersUl.appendChild(li);
         });
     }
-}
-
-function addTag(li, text) {
-    const badge = document.createElement("span");
-    badge.className = "player-tag";
-    badge.textContent = text;
-    li.appendChild(badge);
 }
 
 playerForm.addEventListener("submit", (e) => {
