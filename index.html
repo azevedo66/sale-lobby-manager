@@ -37,7 +37,7 @@
                     <span class="switch-label">Waiting for Small Rotation</span>
                 </label>
                 
-                <button type="submit">Add Player</button>
+                <button type="submit" class="btn-primary">Add Player</button>
             </form>
 
             <div id="entered-players-container" class="player-section">
@@ -45,7 +45,10 @@
                 <ul id="entered-players-list"></ul>
             </div>
 
-            <button id="create-rotations-btn">Create Rotations</button>
+            <button id="create-rotations-btn" class="btn-primary">Create Rotations</button>
+            <div class="center-btn">
+                <button id="end-all-btn" class="btn-danger">End All Rotations</button>
+            </div>
         </section>
 
         <section id="player-lists-section">
@@ -84,7 +87,9 @@
                     <li><strong>Waiting for Small Rotation:</strong> Select this if the player only wants to join smaller rotations, ensuring they're grouped more fairly.</li>
                 </ul>
             </div>
-            <button id="toggle-info-btn">Show Info</button>
+            <div class="center-btn">
+                <button id="toggle-info-btn" class="btn-secondary">Show Info</button>
+            </div>
         </section>
     </main>
 

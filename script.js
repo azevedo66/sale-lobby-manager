@@ -8,10 +8,13 @@ class Player {
 }
 
 let players = [];
+let rotations = [];
+let waitingList = [];
 
 const playerForm = document.getElementById("player-input-form");
 const enteredPlayersList = document.getElementById("entered-players-list");
 const createRotationsBtn = document.getElementById("create-rotations-btn");
+const endAllBtn = document.getElementById("end-all-btn");
 const toggleInfoBtn = document.getElementById("toggle-info-btn");
 const infoContent = document.getElementById("info-content");
 
@@ -27,7 +30,7 @@ function renderPlayers() {
 
         const removeBtn = document.createElement("button");
         removeBtn.textContent = "Remove";
-        removeBtn.className = "remove-btn";
+        removeBtn.className = "btn-danger";
         removeBtn.addEventListener("click", () => removePlayer(index));
         li.appendChild(removeBtn);
 
@@ -45,9 +48,19 @@ function renderRotations(rotations, waitingList, nonHelpers) {
     waitingUl.innerHTML = "";
     nonHelpersUl.innerHTML = "";
 
-    rotations.forEach((rotation, i) => {
+    rotations.forEach((rotationObj, i) => {
         const li = document.createElement("li");
-        li.innerHTML = `<strong>Rotation ${i + 1}:</strong> ` + rotation.map(p => `${p.name} (${p.businesses})`).join(", ");
+        li.innerHTML = `<strong>Rotation ${i + 1}:</strong> ` + 
+                        rotationObj.players.map(p => `${p.name} (${p.businesses})`).join(", ");
+        
+        const endBtn = document.createElement("button");
+        endBtn.textContent = "End Rotation";
+        endBtn.className = "btn-danger";
+        endBtn.addEventListener("click", () => {
+            endRotation(i);
+        });
+
+        li.appendChild(endBtn);
         rotationList.appendChild(li);
     });
 
@@ -100,10 +113,10 @@ function createRotations() {
     const nonHelpers = players.filter(p => p.isNonHelper);
     const waitingSmall = players.filter(p => p.waitingSmallRotation);
 
-    let waitingList = [];
+    waitingList = [];
 
     const maxRotationCount = Math.ceil((sellers.length + helpers.length) / 4) || 1;
-    let rotations = Array.from({ length: maxRotationCount }, () => ({ players: [], total: 0 }));
+    rotations = Array.from({ length: maxRotationCount }, () => ({ players: [], total: 0 }));
 
     sellers.forEach(seller => {
         const target = rotations.reduce((min, r) => 
@@ -137,7 +150,24 @@ function createRotations() {
     }
     waitingList.push(...waitingSmall);
 
-    renderRotations(validRotations.map(r => r.players), waitingList, nonHelpers);
+    rotations = validRotations;
+    waitingList = [...waitingSmall, ...waitingList];
+
+    renderRotations(rotations, waitingList, nonHelpers);
+}
+
+function endRotation(index) {
+    const rotationObj = rotations[index];
+    if (!rotationObj) return;
+
+    rotationObj.players.forEach(player => {
+        player.businesses = 0;
+        waitingList.push(player);
+    });
+
+    rotations.splice(index, 1);
+
+    renderRotations(rotations, waitingList, players.filter(p => p.isNonHelper));
 }
 
 function balanceRotations(rotations) {
@@ -172,9 +202,19 @@ function balanceRotations(rotations) {
     } while (changed);
 }
 
-
 createRotationsBtn.addEventListener("click", () => {
     createRotations();
+});
+
+endAllBtn.addEventListener("click", () => {
+    rotations.forEach(rotation =>  {
+        rotation.players.forEach(player => {
+            player.businesses = 0;
+            waitingList.push(player);
+        });
+    });
+    rotations = [];
+    renderRotations(rotations, waitingList, players.filter(p => p.isNonHelper));
 });
 
 toggleInfoBtn.addEventListener("click", () => {
