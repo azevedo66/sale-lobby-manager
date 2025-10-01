@@ -247,11 +247,20 @@ footer {
 
 .rotation-item {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px;
+    border-bottom: 1px solid #3a3a4a;
 }
 
-.rotation-buttons {
+.rotation-player {
     display: flex;
-    gap: 6px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+}
+
+.end-rotation-btn {
+    align-self: flex-start;
+    margin-top: 8px;
 }

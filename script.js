@@ -53,16 +53,23 @@ function renderRotations(rotations, waitingList, nonHelpers) {
     } else {
         rotations.forEach((rotationObj, i) => {
             const li = document.createElement("li");
-            li.innerHTML = `<strong>Rotation ${i + 1}:</strong> ` + 
-                            rotationObj.players.map(p => `${p.name} (${p.businesses} businesses)`).join(", ");
-            
-            const endBtn = document.createElement("button");
-            endBtn.textContent = "End Rotation";
-            endBtn.className = "btn-danger";
-            endBtn.addEventListener("click", () => endRotation(i));
-            li.appendChild(endBtn);
+            li.className = "rotation-item";
+
+            const title = document.createElement("strong");
+            title.textContent = `Rotation ${i + 1}:`;
+            li.appendChild(title);
     
             rotationObj.players.forEach((player, idx) => {
+                const playerDiv = document.createElement("div");
+                playerDiv.className = "rotation-player";
+
+                const nameSpan = document.createElement("span");
+                nameSpan.textContent = `${player.name} (${player.businesses} businesses)`;
+                playerDiv.appendChild(nameSpan);
+
+                if (player.isNonHelper) addTag(nameSpan, "Non-Helper");
+                if (player.waitingSmallRotation) addTag(nameSpan, "Waiting for Small Rotation");
+
                 const moveBtn = document.createElement("button");
                 moveBtn.textContent = "Move to Waiting";
                 moveBtn.className = "btn-secondary";
@@ -71,8 +78,16 @@ function renderRotations(rotations, waitingList, nonHelpers) {
                     rotationObj.players.splice(idx, 1);
                     renderRotations(rotations, waitingList, nonHelpers);
                 });
-                li.appendChild(moveBtn);
+
+                playerDiv.appendChild(moveBtn);
+                li.appendChild(playerDiv);
             });
+
+            const endBtn = document.createElement("button");
+            endBtn.textContent = "End Rotation";
+            endBtn.className = "btn-danger";
+            endBtn.addEventListener("click", () => endRotation(i));
+            li.appendChild(endBtn);
 
             rotationList.appendChild(li);
         });
