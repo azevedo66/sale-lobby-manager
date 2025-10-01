@@ -23,7 +23,7 @@ function renderPlayers() {
 
     players.forEach((player, index) => {
         const li = document.createElement("li");
-        li.textContent = `${player.name} (${player.businesses}) `;
+        li.textContent = `${player.name} (${player.businesses} businesses)`;
 
         if (player.isNonHelper) addTag(li, "Non-Helper");
         if (player.waitingSmallRotation) addTag(li, "Waiting for Small Rotation");
@@ -48,33 +48,71 @@ function renderRotations(rotations, waitingList, nonHelpers) {
     waitingUl.innerHTML = "";
     nonHelpersUl.innerHTML = "";
 
-    rotations.forEach((rotationObj, i) => {
-        const li = document.createElement("li");
-        li.innerHTML = `<strong>Rotation ${i + 1}:</strong> ` + 
-                        rotationObj.players.map(p => `${p.name} (${p.businesses})`).join(", ");
-        
-        const endBtn = document.createElement("button");
-        endBtn.textContent = "End Rotation";
-        endBtn.className = "btn-danger";
-        endBtn.addEventListener("click", () => {
-            endRotation(i);
+    if (rotations.length === 0) {
+        rotationList.innerHTML = `<li class="empty-message">No players yet</li>`
+    } else {
+        rotations.forEach((rotationObj, i) => {
+            const li = document.createElement("li");
+            li.innerHTML = `<strong>Rotation ${i + 1}:</strong> ` + 
+                            rotationObj.players.map(p => `${p.name} (${p.businesses} businesses)`).join(", ");
+            
+            const endBtn = document.createElement("button");
+            endBtn.textContent = "End Rotation";
+            endBtn.className = "btn-danger";
+            endBtn.addEventListener("click", () => endRotation(i));
+            li.appendChild(endBtn);
+    
+            rotationObj.players.forEach((player, idx) => {
+                const moveBtn = document.createElement("button");
+                moveBtn.textContent = "Move to Waiting";
+                moveBtn.className = "btn-secondary";
+                moveBtn.addEventListener("click", () => {
+                    waitingList.push(player);
+                    rotationObj.players.splice(idx, 1);
+                    renderRotations(rotations, waitingList, nonHelpers);
+                });
+                li.appendChild(moveBtn);
+            });
+
+            rotationList.appendChild(li);
         });
+    }
 
-        li.appendChild(endBtn);
-        rotationList.appendChild(li);
-    });
-
-    waitingList.forEach(p => {
-        const li = document.createElement("li");
-        li.textContent = `${p.name} (${p.businesses})`;
-        waitingUl.appendChild(li);
-    })
-
-    nonHelpers.forEach(p => {
-        const li = document.createElement("li");
-        li.textContent = `${p.name} (${p.businesses})`;
-        nonHelpersUl.appendChild(li);
-    });
+    if (waitingList.length === 0) {
+        waitingUl.innerHTML = `<li class="empty-message">No players yet</li>`;
+    } else {
+        waitingList.forEach((player, i) => {
+            const li = document.createElement("li");
+            li.textContent = `${player.name} (${player.businesses} businesses)`;
+    
+            const moveBtn = document.createElement("button");
+            moveBtn.textContent = "Move to Rotation";
+            moveBtn.className = "btn-primary";
+            moveBtn.addEventListener("click", () => {
+                let target = rotations.find(r => r.players.length < 4);
+                if(!target) {
+                    target = { players: [], total: 0 };
+                    rotations.push(target);
+                }
+                target.players.push(player);
+                waitingList.splice(i, 1);
+                renderRotations(rotations, waitingList, nonHelpers);
+            });
+    
+            li.appendChild(moveBtn);
+            waitingUl.appendChild(li);
+        });
+    }
+    
+    if (nonHelpers.length === 0) {
+        nonHelpersUl.innerHTML = `<li class="empty-message">No players yet</li>`;
+    } else {
+        nonHelpers.forEach(p => {
+            const li = document.createElement("li");
+            li.textContent = `${p.name} (${p.businesses} businesses)`;
+            nonHelpersUl.appendChild(li);
+        });
+    }
 }
 
 function addTag(li, text) {
@@ -148,7 +186,6 @@ function createRotations() {
     while (waitingSmall.length >= 3) {
         validRotations.push({ players: waitingSmall.splice(0, 3), total: 0 });
     }
-    waitingList.push(...waitingSmall);
 
     rotations = validRotations;
     waitingList = [...waitingSmall, ...waitingList];
@@ -191,8 +228,8 @@ function balanceRotations(rotations) {
                             const idxB = rotations[j].players.indexOf(b);
                             [rotations[i].players[idxA], rotations[j].players[idxB]] = [rotations[j].players[idxB], rotations[i].players[idxA]];
 
-                            rotations[i].total = newTotalA;
-                            rotations[j].total = newTotalB;
+                            rotations[i].total = rotations[i].players.reduce((sum, p) => sum + p.businesses, 0);
+                            rotations[j].total = rotations[j].players.reduce((sum, p) => sum + p.businesses, 0);
                             changed = true;
                         }
                     }
@@ -222,3 +259,5 @@ toggleInfoBtn.addEventListener("click", () => {
     infoContent.style.display = isHidden ? "block" : "none";
     toggleInfoBtn.textContent = isHidden ? "Hide Info" : "Show Info";
 });
+
+renderRotations([], [], []);
