@@ -155,8 +155,15 @@ function renderRotations(rotationsArr, waitingArr, nonHelpersArr) {
     }
 }
 
+let rotationsInitialized = false;
+
 playerForm.addEventListener("submit", (e) => {
     e.preventDefault();
+
+    if (rotationsInitialized) {
+        alert("Adding new players is temporarily disabled until further logic is added.");
+        return;
+    }
 
     const playerName = document.getElementById("player-name-input").value.trim();
     const businesses = parseInt(document.getElementById("businesses-input").value);
@@ -318,6 +325,7 @@ function balanceRotations(rotations) {
 
 createRotationsBtn.addEventListener("click", () => {
     createRotations();
+    rotationsInitialized = true;
 });
 
 endAllBtn.addEventListener("click", () => {
