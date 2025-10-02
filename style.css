@@ -9,8 +9,6 @@ body {
     color: #f5f5f5; 
     font-family: 'Inter', sans-serif; 
     line-height: 1.5;
-    margin: 0;
-    padding: 0;
 }
 
 header, main, footer {
@@ -112,11 +110,17 @@ button + button {
 
 #player-input-form input[type="text"],
 #player-input-form input[type="number"] {
-    padding: 8px;
+    padding: 10px;
     border: none;
-    border-radius: 4px;
-    background-color: #1b1b29;
-    color: #f5f5f5
+    border-radius: 46px;
+    background-color: #232339;
+    color: #f5f5f5;
+    font-size: 0.95rem;
+}
+
+#player-input-form button {
+    width: auto;
+    padding: 10px 14px;
 }
 
 .switch {
@@ -166,14 +170,13 @@ button + button {
 }
 
 .player-tag {
-    display: inline-block;
     background-color: #4da6ff;
     color: #fff;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     font-weight: 600;
     padding: 2px 6px;
     border-radius: 4px;
-    margin-left: 8px;
+    margin-left: 6px;
 }
 
 .player-section {
@@ -190,12 +193,12 @@ button + button {
 }
 
 .player-section ul {
-    list-style: none;
+    padding: 0;
+    margin-top: 6px;
 }
 
 .player-section li {
-    padding: 5px 0;
-    border-bottom: 1px solid #3a3a4a;
+    margin-bottom: 6px;
 }
 
 .player-section li:last-child {
@@ -206,6 +209,18 @@ button + button {
     display: flex;
     flex-direction: column;
     gap: 20px;
+}
+
+#player-lists-section .player-section {
+    padding: 16px;
+    background-color: #2d2d44;
+    border-radius: 8px;
+    transition: box-shadow 0.25s ease, transform 0.2s ease;
+    margin-bottom: 24px;
+}
+
+#player-lists-section .player-section:hover {
+    box-shadow: 0 6px 12px rgba(77, 166, 255, 0.35);
 }
 
 #info-content {
@@ -255,10 +270,6 @@ footer {
     padding: 0;
 }
 
-#player-lists-section .player-section {
-    margin-bottom: 24px;
-}
-
 #player-lists-section h3 {
     margin-bottom: 8px;
 }
@@ -287,12 +298,17 @@ footer {
 }
 
 .rotation-item {
-    margin-bottom: 16px;
-    padding: 10px;
-    border: 1px solid #3a3a4a;
+    margin-bottom: 14px;
+    padding: 12px;
+    border: 1px solid #3a3a5a;
     border-radius: 8px;
-    background-color: #2a2a3b;
-    color: #f5f5f5;
+    background-color: #2f2f48;
+    transition: box-shadow 0.25s ease, transform 0.2s ease;
+}
+
+.rotation-item:hover {
+    box-shadow: 0 6px 16px rgba(77, 166, 255, 0.4);
+    transform: translateY(-2px);
 }
 
 .player-item-container {
@@ -300,14 +316,39 @@ footer {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 6px;
-    padding: 6px 8px;
-    background-color: #2a2a3b;
-    border-radius: 6px;
-    border: 1px solid #3a3a4a;
+    padding: 6px 12px;
+    background-color: #2e2e44;
+    border-radius: 8px;
+    border: 1px solid #3a3a5a;
     color: #f5f5f5;
+    transition: box-shadow 0.25s ease, transform 0.2s ease;
 }
 
-.olayer-item-container:hover {
-    box-shadow: 0 4px 12px rgba(77, 166, 255, 0.5);
+.player-item-container:hover {
+    box-shadow: 0 6px 16px rgba(77, 166, 255, 0.45);
     transform: translateY(-2px);
+}
+
+.player-item-container span {
+    font-weight: 500;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.player-item-container button {
+    flex-shrink: 0;
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    border-radius: 6px;
+}
+
+.player-section ul,
+.rotation-players,
+.rotation-list,
+#player-lists-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0
 }
