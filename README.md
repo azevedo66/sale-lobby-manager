@@ -44,8 +44,8 @@ A **sale rotation** in GTA is when players group together to help sell each othe
 - Helpers fill empty spots to reach 3-4 players.  
 - Players take turns selling **all of their businesses** before moving to the next seller. 
 - New players may be **inserted into existing rotations** or placed on the **waiting list**.  
-- Rotations are only shuffled at initialization or in the **Special Case of two groups of 3**.
-- **Players are only shuffled with the two groups of 3 special case ** to balance total businesses.
+- Rotations are only shuffled when initializing rotations.
+  - **Players are only shuffled with the two groups of 3 special case** to balance total businesses.
 
 ---
 
@@ -73,7 +73,7 @@ A **sale rotation** in GTA is when players group together to help sell each othe
 - **Helpers** are distributed:
   - First to fill incomplete rotations (to reach 3 or 4).
   - Then held in waiting list if not needed.
-- After initialization, no reshuffling occurs except in the **Special Case** below.
+- No reshuffling after initialization.
 
 ### Adding New Players
 - **New Sellers**:
@@ -90,16 +90,10 @@ A **sale rotation** in GTA is when players group together to help sell each othe
 The **only time existing groups are reshuffled**.
 
 **Trigger:**
-  - Exactly **5 sellers + 1 helper** at initialization
-  - A **6th players joins** when there are already 5 sellers (grouped as 4 + 1 waiting).
+  - Exactly **5 sellers + 1 helper** or **6 sellers** at initialization
 
 **Action:**
-  - All playes are reshuffled into two groups of 3, balanced by businesses.
-
-**Edge Case:**
-- If there are 5 sellers and no helper:
-  - Groups form as **rotation of 4 sellers** and **1 seller waiting**.
-  - Only when a **6th player joins** (seller of helper) does the reshuffle into **two groups of 3** occur.
+  - All playes are shuffled into two groups of 3, balanced by businesses.
 
 ---
 
