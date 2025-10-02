@@ -87,12 +87,13 @@ function renderRotations(rotationsArr, waitingArr, nonHelpersArr) {
             const li = document.createElement("li");
             li.className = "rotation-item";
 
-            const totalBusinesses = rotationObj.players.reduce((sum, p) => sum + p.businesses, 0);
+            const totalBusinesses = (rotationObj.players || []).reduce((sum, p) => sum + (p?.businesses || 0), 0);
             const title = document.createElement("strong");
             title.textContent = `Rotation ${i + 1} (${totalBusinesses} businesses):`;
             li.appendChild(title);
     
             rotationObj.players.forEach((player, idx) => {
+                if (!player) return;
                 const playerEl = createPlayerElement(
                     player,
                     "Move to Waiting List",
@@ -120,6 +121,7 @@ function renderRotations(rotationsArr, waitingArr, nonHelpersArr) {
         waitingUl.innerHTML = `<li class="empty-message">No players yet</li>`;
     } else {
         waitingArr.forEach((player, i) => {
+            if (!player) return;
             const li = document.createElement("li");
             const playerEl = createPlayerElement(
                 player, 
@@ -185,28 +187,47 @@ function createRotations() {
     rotations = [];
     waitingList = [];
 
-    for (let i = 0; i < sellers.length; i += 4) {
-        const chunk = sellers.slice(i, i + 4);
-        if (chunk.length === 4) {
-            rotations.push({ players: chunk, total: chunk.reduce((sum, p) => sum + p.businesses, 0) });
-        } else {
-            waitingList.push(...chunk); 
-        }
+    while (sellers.length >= 4) {
+        const group = sellers.splice(0, 4);
+        const rot = { players: group, total: 0 };
+        rot.total = group.reduce((sum, p) => sum + (p?.businesses || 0), 0);
+        rotations.push(rot);
+    }
+
+    while (sellers.length >= 3) {
+        const group = sellers.splice(0, 3);
+        const rot = { players: group, total: 0 };
+        rot.total = group.reduce((sum, p) => sum + (p?.businesses || 0), 0);
+        rotations.push(rot);
+    }
+
+    if (sellers.length > 0 && sellers.length < 3) {
+        waitingList.push(...sellers);
+        sellers.length = 0;
     }
 
     helpers.forEach(helper => {
         const target = rotations.find(r => r.players.length < 4);
-        if (target) target.players.push(helper);
-        else waitingList.push(helper); 
+        if (target) {
+            target.players.push(helper);
+            target.total = target.players.reduce((sum, p) => sum + (p?.businesses || 0), 0);
+        } else {
+            waitingList.push(helper); 
+        }
     });
-    
+
     balanceRotations(rotations);
 
     while (waitingSmall.length >= 3) {
-        rotations.push({ players: waitingSmall.splice(0, 3), total: 0 });
+        const smallRot = { players: waitingSmall.splice(0, 3), total: 0 };
+        smallRot.total = smallRot.players.reduce((sum, p) => sum + (p?.businesses || 0), 0);
+        rotations.push(smallRot);
     }
 
-    waitingList.push(...waitingSmall); 
+    if (waitingSmall.length > 0) {
+        waitingList.push(...waitingSmall)
+    }
+
     renderRotations(rotations, waitingList, nonHelpers);
 
     hideEnteredPlayers = true;
@@ -233,13 +254,19 @@ function balanceRotations(rotations) {
         changed = false;
         for (let i = 0; i < rotations.length; i++) {
             for (let j = i + 1; j < rotations.length; j++) {
-                const sellersA = rotations[i].players.filter(p => p.businesses > 0);
-                const sellersB = rotations[j].players.filter(p => p.businesses > 0);
+                if (!rotations[i] || !rotations[j]) continue;
+
+                const sellersA = rotations[i].players.filter(p => p && p.businesses > 0);
+                const sellersB = rotations[j].players.filter(p => p && p.businesses > 0);
+
+                if (sellersA.length === 0 || sellersB.length === 0) continue;
 
                 for (let a of sellersA) {
                     for (let b of sellersB) {
-                        const newTotalA = rotations[i].total - a.businesses + b.businesses;
-                        const newTotalB = rotations[j].total - b.businesses + a.businesses;
+                        if (!a || !b) continue;
+
+                        const newTotalA = (rotations[i].players || []).reduce((sum, p) => sum + (p?.businesses || 0), 0) - a.businesses + b.businesses;
+                        const newTotalB = (rotations[j].players || []).reduce((sum, p) => sum + (p?.businesses || 0), 0) - b.businesses + a.businesses;
                         const diffBefore = Math.abs(rotations[i].total - rotations[j].total);
                         const diffAfter = Math.abs(newTotalA - newTotalB);
 
@@ -248,8 +275,8 @@ function balanceRotations(rotations) {
                             const idxB = rotations[j].players.indexOf(b);
                             [rotations[i].players[idxA], rotations[j].players[idxB]] = [rotations[j].players[idxB], rotations[i].players[idxA]];
 
-                            rotations[i].total = rotations[i].players.reduce((sum, p) => sum + p.businesses, 0);
-                            rotations[j].total = rotations[j].players.reduce((sum, p) => sum + p.businesses, 0);
+                            rotations[i].total = (rotations[i].players || []).reduce((sum, p) => sum + (p?.businesses || 0), 0);
+                            rotations[j].total = (rotations[j].players || []).reduce((sum, p) => sum + (p?.businesses || 0), 0);
                             changed = true;
                         }
                     }
@@ -280,4 +307,5 @@ toggleInfoBtn.addEventListener("click", () => {
     toggleInfoBtn.textContent = isHidden ? "Hide Info" : "Show Info";
 });
 
+renderPlayers();
 renderRotations([], [], []);
