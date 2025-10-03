@@ -1,7 +1,7 @@
 # GTA Sale Rotation Manager
 
 ## Introduction
-The **GTA Sale Rotation Manager** is a tool designed to help players organize fair and efficient sale rotations for their GTA businesses. It ensures balanced rotations, proper helper allocation, and smooth management of waiting lists.  
+The **GTA Sale Rotation Manager** helps players organize fair and efficient sale rotations for their GTA businesses by ensuring balanced groups, proper helper allocation, and smooth management of waiting lists.
 
 This document outlines the rules, features, and guidelines for using the manager effectively.
 
@@ -27,7 +27,7 @@ This document outlines the rules, features, and guidelines for using the manager
 - **Helper:** A player with 0 businesses who assists other players in a rotation.  
 - **Rotation:** A group of 3–4 players formed to sell businesses in turns.  
 - **Waiting List:** A list of players who cannot currently join a valid rotation.  
-- **Non-Helper**: A tagged player who cannot participate in selling or helping.
+- **Non-Helper:** A tagged player who cannot participate in selling or helping.
 - **Small Rotation:** An optional and special rotation for players with 0–1 businesses.
 
 ---
@@ -57,7 +57,7 @@ A **sale rotation** in GTA is when players group together to help sell each othe
 - **Helpers**: Fill empty spots (to reach 3-4 players).
 - **Balance**: Initial rotations are balanced so that total businesses across groups are as even as possible. 
 
-### Waiting List**
+### Waiting List
 - **Sellers** go to waiting list if:
   - Fewer than 3 sellers are available to start a new group, OR
   - They’re the extra seller when groups don’t divide evenly.
@@ -77,11 +77,11 @@ A **sale rotation** in GTA is when players group together to help sell each othe
 
 ### Adding New Players
 - **New Sellers**:
-  - Insert into a 3-player rotation (preferably the one with the fewest businesses).
+  - Preferably insert into a 3-player rotation with the fewest total businesses.
   - If all rotations already have 4 players, replace a helper (that helper moves to waiting list).
   - If no valid spot exists, form a new rotation when enough players join.
   - Otherwise, remain on waiting list.
-- New Helpers: 
+- **New Helpers**: 
   - Fill a 3-player rotation.
   - Start a new rotation if sellers are waiting. 
   - Otherwise, remain on waiting list.
@@ -93,7 +93,7 @@ The **only time existing groups are reshuffled**.
   - Exactly **5 sellers + 1 helper** or **6 sellers** at initialization
 
 **Action:**
-  - All playes are shuffled into two groups of 3, balanced by businesses.
+  - All players are shuffled into two groups of 3, balanced by businesses.
 
 ---
 
@@ -109,12 +109,12 @@ The **only time existing groups are reshuffled**.
 - Players are moved back to the waiting list.
 
 ### Non-Helper
-- Tag players as **non-helpers** if they cannot particpate.  
-- Tagged players are added to the **Non-Helpers** list and are exluded from rotations.  
+- Tag players as **non-helpers** if they cannot participate.  
+- Tagged players are added to the **Non-Helpers** list and are excluded from rotations.  
 - Tags can be removed when the player is able to participate.
 
 ### Small Rotation Waiting
-- Players with 0-1 businesses can be marked as waiting for a small rotation.
+- Players with 0–1 businesses can opt into the **Small Rotation Waiting List**.
 - They stay in the waiting list until manually grouped.
 - **Purpose:** Allows players with very few businesses to indicate they are waiting for a small rotation without being automatically grouped.  
 
@@ -125,4 +125,4 @@ The **only time existing groups are reshuffled**.
 2. Initialize rotations into balanced groups of 3-4 players.  
 3. Use manual override if groups need adjustment.  
 4. End rotations when a sale cycle completes, moving players back to the waiting list.  
-6. Optionally, tag players with 0–1 businesses as **waiting for a small rotation**.
+5. Optionally, tag players with 0–1 businesses as **waiting for a small rotation**.

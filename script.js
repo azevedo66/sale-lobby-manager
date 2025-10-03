@@ -19,6 +19,7 @@ const toggleInfoBtn = document.getElementById("toggle-info-btn");
 const infoContent = document.getElementById("info-content");
 
 let hideEnteredPlayers = false;
+let rotationsInitialized = false;
 
 function addTag(li, text) {
     const badge = document.createElement("span");
@@ -155,15 +156,8 @@ function renderRotations(rotationsArr, waitingArr, nonHelpersArr) {
     }
 }
 
-let rotationsInitialized = false;
-
 playerForm.addEventListener("submit", (e) => {
     e.preventDefault();
-
-    if (rotationsInitialized) {
-        alert("Adding new players is temporarily disabled until further logic is added.");
-        return;
-    }
 
     const playerName = document.getElementById("player-name-input").value.trim();
     const businesses = parseInt(document.getElementById("businesses-input").value);
@@ -172,8 +166,16 @@ playerForm.addEventListener("submit", (e) => {
 
     if (!playerName) return;
 
-    players.push(new Player(playerName, businesses, isNonHelper, waitingSmallRotation));
-    renderPlayers();
+    const newPlayer = new Player(playerName, businesses, isNonHelper, waitingSmallRotation);
+    
+    players.push(newPlayer);
+
+    if (rotationsInitialized) {
+        addNewPlayerAfterRotations(newPlayer);
+    } else {
+        renderPlayers();
+    }
+    
     playerForm.reset();
 });
 
@@ -269,22 +271,6 @@ function createRotations() {
     renderPlayers();
 }
 
-
-
-function endRotation(index) {
-    const rotationObj = rotations[index];
-    if (!rotationObj) return;
-
-    rotationObj.players.forEach(player => {
-        player.businesses = 0;
-        waitingList.push(player);
-    });
-
-    rotations.splice(index, 1);
-
-    renderRotations(rotations, waitingList, players.filter(p => p.isNonHelper));
-}
-
 function balanceRotations(rotations) {
     let changed;
     do {
@@ -323,9 +309,75 @@ function balanceRotations(rotations) {
     } while (changed);
 }
 
+function addNewPlayerAfterRotations(player) {
+    waitingList.push(player);
+
+    let incompleteRotation = rotations.find(rot => rot.players.length < 4);
+    if (incompleteRotation) {
+        incompleteRotation.players.push(player);
+        incompleteRotation.total += player.businesses || 0;
+        waitingList = waitingList.filter(p => p !== player);
+    } else if (player.businesses > 0) {
+        const rotationWithHelper = rotations.find(rot => rot.players.some(p => p.businesses === 0));
+        if (rotationWithHelper) {
+            const helperIndex = rotationWithHelper.players.findIndex(p => p.businesses === 0);
+            const replacedHelper = rotationWithHelper.players[helperIndex];
+            rotationWithHelper.players[helperIndex] = player;
+            rotationWithHelper.total += player.businesses - replacedHelper.businesses;
+            waitingList = waitingList.filter(p => p !== player);
+            waitingList.push(replacedHelper);
+        } 
+    }
+
+    while (waitingList.some(p => p.businesses > 0)) {
+        const sellers = waitingList.filter(p => p.businesses > 0);
+        const helpers = waitingList.filter(p => p.businesses === 0);
+
+        if (sellers.length === 0) break;
+
+        const newRotationPlayers = [];
+        newRotationPlayers.push(sellers.shift());
+
+        while (newRotationPlayers.length < 4 && sellers.length > 0) {
+            const p = sellers.shift();
+            newRotationPlayers.push(p);
+        }
+
+        while (newRotationPlayers.length < 4 && helpers.length > 0) {
+            const p = helpers.shift();
+            newRotationPlayers.push(p);
+        }
+        
+        waitingList = waitingList.filter(p => !newRotationPlayers.includes(p));
+        
+        rotations.push({
+            players: newRotationPlayers,
+            total: newRotationPlayers.reduce((sum, p) => sum + (p.businesses || 0), 0)
+        });
+    }
+
+    renderRotations(rotations, waitingList, players.filter(p => p.isNonHelper));
+    renderPlayers();
+}
+
+function endRotation(index) {
+    const rotationObj = rotations[index];
+    if (!rotationObj) return;
+
+    rotationObj.players.forEach(player => {
+        player.businesses = 0;
+        waitingList.push(player);
+    });
+
+    rotations.splice(index, 1);
+
+    renderRotations(rotations, waitingList, players.filter(p => p.isNonHelper));
+}
+
 createRotationsBtn.addEventListener("click", () => {
     createRotations();
     rotationsInitialized = true;
+    createRotationsBtn.disabled = true;
 });
 
 endAllBtn.addEventListener("click", () => {
