@@ -28,7 +28,6 @@
                     <input type="checkbox" id="non-helper-input">
                     <span class="slider"></span>
                     <span class="switch-label">Mark as Non-Helper</span>
-
                 </label>
 
                 <label class="switch">
@@ -36,8 +35,10 @@
                     <span class="slider"></span>
                     <span class="switch-label">Waiting for Small Rotation</span>
                 </label>
-                
-                <button type="submit">Add Player</button>
+
+                <div class="center-btn">
+                    <button type="submit" class="btn-primary">Add Player</button>
+                </div>
             </form>
 
             <div id="entered-players-container" class="player-section">
@@ -45,23 +46,26 @@
                 <ul id="entered-players-list"></ul>
             </div>
 
-            <button id="create-rotations-btn">Create Rotations</button>
+            <div class="rotation-actions">
+                <button id="create-rotations-btn" class="btn-primary">Create Rotations</button>
+                <button id="end-all-btn" class="btn-danger">End All Rotations</button>
+            </div>
         </section>
 
         <section id="player-lists-section">
-            <div class="player-section">
+            <div class="player-section" id="rotations-section">
                 <h3>Rotations</h3>
-                <ul id="rotation-list"></ul>
+                <ul class="rotation-list" id="rotation-list"></ul>
             </div>
 
-            <div class="player-section">
+            <div class="player-section" id="waiting-section">
                 <h3>Waiting List</h3>
-                <ul id="waiting-list"></ul>
+                <ul class="rotation-list" id="waiting-list"></ul>
             </div>
 
-            <div class="player-section">
+            <div class="player-section" id="non-helpers-section">
                 <h3>Non-Helpers</h3>
-                <ul id="non-helpers-list"></ul>
+                <ul class="rotation-list" id="non-helpers-list"></ul>
             </div>
         </section>
 
@@ -84,7 +88,9 @@
                     <li><strong>Waiting for Small Rotation:</strong> Select this if the player only wants to join smaller rotations, ensuring they're grouped more fairly.</li>
                 </ul>
             </div>
-            <button id="toggle-info-btn">Show Info</button>
+            <div class="center-btn">
+                <button id="toggle-info-btn" class="btn-secondary">Show Info</button>
+            </div>
         </section>
     </main>
 
