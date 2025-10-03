@@ -20,11 +20,11 @@ Follow these guidelines for branch naming and commit messages.
    - `docs/api-guide`  
    - `chore/update-dependencies`  
 
-3. **Make Changes & Commit**  
+2. **Make Changes & Commit**  
    - Keep commits focused and atomic (one logical change per commit).  
    - Follow the commit message guidelines below.
 
-4. **Push Changes** 
+3. **Push Changes** 
     - Push your branch to GitHub when ready.
 
 ---

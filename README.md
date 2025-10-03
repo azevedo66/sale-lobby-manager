@@ -1,7 +1,7 @@
 # GTA Sale Rotation Manager
 
 ## Introduction
-The **GTA Sale Rotation Manager** helps players organize fair and efficient sale rotations for their GTA businesses by ensuring balanced groups, proper helper allocation, and smooth management of waiting lists
+The **GTA Sale Rotation Manager** helps players organize fair and efficient sale rotations for their GTA businesses by ensuring balanced groups, proper helper allocation, and smooth management of waiting lists.
 
 This document outlines the rules, features, and guidelines for using the manager effectively.
 
@@ -27,7 +27,7 @@ This document outlines the rules, features, and guidelines for using the manager
 - **Helper:** A player with 0 businesses who assists other players in a rotation.  
 - **Rotation:** A group of 3–4 players formed to sell businesses in turns.  
 - **Waiting List:** A list of players who cannot currently join a valid rotation.  
-- **Non-Helper**: A tagged player who cannot participate in selling or helping.
+- **Non-Helper:** A tagged player who cannot participate in selling or helping.
 - **Small Rotation:** An optional and special rotation for players with 0–1 businesses.
 
 ---
@@ -114,7 +114,7 @@ The **only time existing groups are reshuffled**.
 - Tags can be removed when the player is able to participate.
 
 ### Small Rotation Waiting
-- Players with 0–1 businesses can opt into a small rotation waiting list.
+- Players with 0–1 businesses can opt into the **Small Rotation Waiting List**.
 - They stay in the waiting list until manually grouped.
 - **Purpose:** Allows players with very few businesses to indicate they are waiting for a small rotation without being automatically grouped.  
 
