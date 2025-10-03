@@ -1,7 +1,7 @@
 # GTA Sale Rotation Manager
 
 ## Introduction
-The **GTA Sale Rotation Manager** is a tool designed to help players organize fair and efficient sale rotations for their GTA businesses. It ensures balanced rotations, proper helper allocation, and smooth management of waiting lists.  
+The **GTA Sale Rotation Manager** helps players organize fair and efficient sale rotations for their GTA businesses by ensuring balanced groups, proper helper allocation, and smooth management of waiting lists
 
 This document outlines the rules, features, and guidelines for using the manager effectively.
 
@@ -81,7 +81,7 @@ A **sale rotation** in GTA is when players group together to help sell each othe
   - If all rotations already have 4 players, replace a helper (that helper moves to waiting list).
   - If no valid spot exists, form a new rotation when enough players join.
   - Otherwise, remain on waiting list.
-- New Helpers: 
+- **New Helpers**: 
   - Fill a 3-player rotation.
   - Start a new rotation if sellers are waiting. 
   - Otherwise, remain on waiting list.
@@ -114,7 +114,7 @@ The **only time existing groups are reshuffled**.
 - Tags can be removed when the player is able to participate.
 
 ### Small Rotation Waiting
-- Players with 0–1 businesses can opt into a small rotation waiting list..
+- Players with 0–1 businesses can opt into a small rotation waiting list.
 - They stay in the waiting list until manually grouped.
 - **Purpose:** Allows players with very few businesses to indicate they are waiting for a small rotation without being automatically grouped.  
 
