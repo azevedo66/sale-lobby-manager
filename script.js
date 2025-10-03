@@ -269,22 +269,6 @@ function createRotations() {
     renderPlayers();
 }
 
-
-
-function endRotation(index) {
-    const rotationObj = rotations[index];
-    if (!rotationObj) return;
-
-    rotationObj.players.forEach(player => {
-        player.businesses = 0;
-        waitingList.push(player);
-    });
-
-    rotations.splice(index, 1);
-
-    renderRotations(rotations, waitingList, players.filter(p => p.isNonHelper));
-}
-
 function balanceRotations(rotations) {
     let changed;
     do {
@@ -323,9 +307,24 @@ function balanceRotations(rotations) {
     } while (changed);
 }
 
+function endRotation(index) {
+    const rotationObj = rotations[index];
+    if (!rotationObj) return;
+
+    rotationObj.players.forEach(player => {
+        player.businesses = 0;
+        waitingList.push(player);
+    });
+
+    rotations.splice(index, 1);
+
+    renderRotations(rotations, waitingList, players.filter(p => p.isNonHelper));
+}
+
 createRotationsBtn.addEventListener("click", () => {
     createRotations();
     rotationsInitialized = true;
+    createRotationsBtn.disabled = true;
 });
 
 endAllBtn.addEventListener("click", () => {
